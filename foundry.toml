@@ -1,0 +1,50 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc_version = "0.8.36"
+evm_version = "cancun"
+optimizer = true
+optimizer_runs = 200
+via_ir = true
+fs_permissions = [
+    { access = "read", path = "./test/fixtures" },
+    { access = "read-write", path = "./deployments" },
+    { access = "read-write", path = "./art-out" },
+    { access = "read-write", path = "./web/public/art" },
+]
+
+# Production deploys: maximum optimization, size-checked.
+[profile.production]
+via_ir = true
+optimizer_runs = 10000
+
+[profile.ci.fuzz]
+runs = 1000
+
+[profile.ci.invariant]
+runs = 512
+depth = 50
+
+[profile.intense.fuzz]
+runs = 10000
+
+[profile.intense.invariant]
+runs = 2000
+depth = 100
+
+[fuzz]
+runs = 256
+
+[invariant]
+runs = 256
+depth = 40
+fail_on_revert = true
+
+[fmt]
+line_length = 120
+bracket_spacing = false
+
+[rpc_endpoints]
+robinhood = "${ROBINHOOD_RPC_URL}"
+robinhood_testnet = "${ROBINHOOD_TESTNET_RPC_URL}"

@@ -1,0 +1,377 @@
+@import "tailwindcss";
+
+/**
+ * StockPack design system — "Swiss terminal".
+ *
+ * Warm cream ground, hairline borders, zero radius, zero shadow. Everything is
+ * JetBrains Mono except display headings, which are Inter Tight at weight 700
+ * with tight negative tracking. Colour is spent almost nowhere: near-black ink,
+ * one grey for secondary text, one accent for state.
+ *
+ * The palette is in oklch so the neutrals stay perceptually even — the cream and
+ * the border differ only in lightness (94.4% vs 85.5%) on the same warm hue, which
+ * is what keeps a page of 1px rules from looking dirty.
+ */
+
+@theme {
+  /* Dark ground. The neutrals keep the warm 106 hue of the original greige so the
+   * page reads as ink-on-paper inverted rather than as a cold terminal. Lightness
+   * runs bg < raise < card, mirroring the light build where a panel sat above the
+   * page — the relationship survives the inversion even though the values flip. */
+  --color-bg: oklch(15.5% 0.004 106); /* page ground */
+  --color-raise: oklch(19.5% 0.004 106); /* lifted band / inset panel */
+  --color-card: oklch(22.5% 0.005 106); /* card ground — the topmost surface */
+  --color-ink: oklch(93% 0.004 106); /* primary text, and the inverted fills */
+  --color-muted: oklch(70% 0.008 106); /* secondary text, labels */
+  --color-line: oklch(33% 0.006 106); /* every hairline on the page */
+  --color-line-soft: oklch(27% 0.005 106); /* inner rules inside a card */
+  --color-accent: oklch(76% 0.15 68); /* StockPack amber, lifted to carry on dark */
+  --color-accent-ink: oklch(80% 0.14 68); /* accent at text contrast on the ground */
+  --color-danger: oklch(66% 0.19 25);
+
+  /* Text and hairlines that sit ON an ink-filled surface. Previously these call
+   * sites hardcoded white, which was invisible the moment `ink` became the light
+   * colour — the logo knockout, the CTA block and the diagram labels all broke. */
+  --color-on-ink: oklch(13% 0.004 106);
+
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: var(--font-inter-tight), "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --radius: 0px;
+}
+
+:root {
+  color-scheme: dark;
+
+  /* The built-in CSS easings are too weak to read as intentional. These are the
+   * standard "strong" variants: ease-out for anything entering or responding to
+   * the user (starts fast, so the interface feels like it heard you), ease-in-out
+   * for things moving across the screen. ease-in is deliberately absent — it
+   * delays the first frame, which is exactly when the user is looking. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%; /* keep landscape rotation from inflating type on iOS */
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    overflow-wrap: break-word; /* long hex addresses must never widen the viewport */
+  }
+}
+
+@layer components {
+  /* ── Type ─────────────────────────────────────────────────────────────────── */
+
+  /* Display headings. Inter Tight 700 at -0.025em is the whole personality of the
+   * page: it is the only non-mono thing on screen, so it has to carry the weight. */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.02;
+  }
+
+  /* Both scales are pinned to measurements taken off the reference at 390px and
+   * 1440px: hero 48→72px, section 30→36px, with the leading tracked separately so
+   * the small end stays at 1.2 and the large end tightens to 1.11. */
+  .h-hero {
+    font-size: clamp(3rem, 5vw, 4.5rem);
+  }
+  .h-section {
+    font-size: clamp(1.875rem, 3vw, 2.25rem);
+    line-height: clamp(2.25rem, 3.4vw, 2.5rem);
+  }
+  .h-card {
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+  /* Section eyebrows and column headers — the small caps that label every block. */
+  .eyebrow {
+    font-size: 10px;
+    line-height: 15px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .mini {
+    font-size: 11px;
+    line-height: 16.5px;
+    color: var(--color-muted);
+  }
+
+  /* ── Surfaces ─────────────────────────────────────────────────────────────── */
+
+  .panel {
+    background: var(--color-card);
+    border: 1px solid var(--color-line);
+  }
+
+  /* A panel with a terminal-style caption bar: mono slug left, meta right. */
+  .panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid var(--color-line);
+    padding: 0.625rem 0.875rem;
+    font-size: 11px;
+    color: var(--color-muted);
+  }
+
+  .rule {
+    border: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  /* ── Controls ─────────────────────────────────────────────────────────────── */
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 1px solid transparent;
+    padding: 0.75rem 1.5rem;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    transition:
+      background-color 140ms var(--ease-out),
+      color 140ms var(--ease-out),
+      border-color 140ms var(--ease-out),
+      transform 160ms var(--ease-out);
+  }
+
+  /* Press feedback. Without it a button gives no sign it was hit until the next
+   * paint; 0.97 is enough to feel, small enough not to read as a bounce. */
+  .btn:not(:disabled):active {
+    transform: scale(0.97);
+  }
+  /* Disabled is stated in colour, not opacity. Fading a light fill to 40% on a dark
+   * ground lands it in mid-grey, and the near-black label on top drops to 2.7:1 —
+   * the one real contrast failure the dark inversion introduced. */
+  .btn:disabled {
+    cursor: not-allowed;
+    background: var(--color-raise);
+    border-color: var(--color-line);
+    color: var(--color-muted);
+  }
+
+  .btn-primary {
+    background: var(--color-ink);
+    color: var(--color-on-ink);
+  }
+  /* hover dims the light fill; the old rule darkened toward black, which on a dark
+   * ground moved the button *away* from the pointer instead of toward it */
+  .btn-primary:not(:disabled):hover {
+    background: oklch(83% 0.004 106);
+  }
+
+  .btn-ghost {
+    background: var(--color-card);
+    border-color: var(--color-line);
+    color: var(--color-ink);
+  }
+  .btn-ghost:not(:disabled):hover {
+    border-color: var(--color-ink);
+  }
+
+  .btn-sm {
+    padding: 0.5rem 0.875rem;
+    font-size: 12px;
+  }
+
+  /* Inline text link with the trailing arrow used all over the page. */
+  .link-arrow {
+    font-size: 12px;
+    color: var(--color-muted);
+    border-bottom: 1px solid var(--color-line);
+    transition: color 0.14s ease, border-color 0.14s ease;
+  }
+  .link-arrow:hover {
+    color: var(--color-ink);
+    border-color: var(--color-ink);
+  }
+
+  .field {
+    width: 100%;
+    background: var(--color-card);
+    border: 1px solid var(--color-line);
+    padding: 0.625rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--color-ink);
+  }
+  .field::placeholder {
+    color: var(--color-muted);
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--color-ink);
+  }
+
+  /* Interior routes share one container; the landing page is full-bleed and
+   * paints its own section bands, so this is per-page rather than on <main>. */
+  .page {
+    margin-inline: auto;
+    max-width: 1280px;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  .page-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    line-height: 1.11;
+  }
+
+  /* Numbered step heading used down the create flow. */
+  .step {
+    font-size: 10px;
+    line-height: 15px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+}
+
+/* ── Motion ───────────────────────────────────────────────────────────────── */
+
+/* The price tape. Duplicated content scrolls exactly -50%, so the seam is
+ * invisible and the loop never jumps. Constant motion, so: linear. */
+@keyframes tape {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.tape-track {
+  display: flex;
+  width: max-content;
+  animation: tape 60s linear infinite;
+}
+
+/* Pausing on hover lets someone actually read a ticker they are pointing at. */
+@media (hover: hover) and (pointer: fine) {
+  .tape:hover .tape-track {
+    animation-play-state: paused;
+  }
+}
+
+/* Hero diagram: value travelling the wire. Also constant motion → linear. The
+ * dots fade at both ends rather than popping — nothing in the real world appears
+ * from nothing, and a hard pop at the node edge reads as a rendering glitch. */
+@keyframes flow {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+.flow-dot {
+  offset-distance: 0%;
+  opacity: 0;
+  animation: flow 2600ms linear infinite;
+}
+
+/* Scroll reveal. Marketing sections are seen once per visit, which is the one
+ * frequency band where a reveal earns its keep. Deliberately small (10px) and
+ * quick — a long slide would just delay the content. */
+.reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 500ms var(--ease-out),
+    transform 500ms var(--ease-out);
+}
+.reveal[data-shown="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Card artwork tilt. The transform itself is written per-frame by CardTilt; these
+ * rules only set up the stage. `will-change` promotes the layer once so the first
+ * pointer move does not pay for a mid-gesture layer creation. */
+.tilt-wrap {
+  perspective: 900px;
+}
+.tilt-inner {
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+/* The specular highlight. plus-lighter adds light rather than washing the artwork
+ * out, which matters because these cards carry real data that has to stay legible. */
+.tilt-sheen {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: plus-lighter;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tilt-inner {
+    transform: none !important;
+  }
+  .tilt-sheen {
+    display: none;
+  }
+}
+
+/* Reduced motion is gentler, not none. Colour and opacity still transition —
+ * they aid comprehension — but continuous motion and anything that moves an
+ * element through space is removed. */
+@media (prefers-reduced-motion: reduce) {
+  .tape-track,
+  .flow-dot {
+    animation: none;
+  }
+  .flow-dot {
+    opacity: 1;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .btn:not(:disabled):active {
+    transform: none;
+  }
+}
+
+/* ── RainbowKit ───────────────────────────────────────────────────────────── */
+
+/* The modal is the one surface we don't own; square its corners so it doesn't
+ * arrive as a pill in the middle of a page that has none. */
+[data-rk] {
+  --rk-radii-modal: 0px;
+  --rk-radii-menuButton: 0px;
+  --rk-radii-actionButton: 0px;
+  --rk-radii-connectButton: 0px;
+  --rk-fonts-body: var(--font-mono);
+}

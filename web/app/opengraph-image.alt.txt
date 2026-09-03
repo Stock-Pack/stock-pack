@@ -1,0 +1,1 @@
+StockPack — the on-chain ownership layer for tokenized equity

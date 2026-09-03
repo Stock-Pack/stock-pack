@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <!-- A favicon must not rely on transparency: the tab strip can be white, light grey,
+       dark, or a browser theme colour, and a light mark on a clear ground disappears on
+       half of them. The plate is part of the icon so contrast never depends on the host. -->
+  <rect width="24" height="24" fill="#14140F"/>
+  <rect x="3.5" y="3.5" width="17" height="17" fill="none" stroke="#F2EFE9" stroke-width="1.7"/>
+  <rect x="6.8" y="7.3" width="10.4" height="2" fill="#F2EFE9"/>
+  <rect x="6.8" y="11" width="7.2" height="2" fill="#F2EFE9"/>
+  <rect x="6.8" y="14.7" width="4.2" height="2" fill="#E8B44F"/>
+</svg>

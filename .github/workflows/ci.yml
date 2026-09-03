@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  FOUNDRY_PROFILE: ci
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: v1.8.1
+
+      - name: Format check
+        run: forge fmt --check
+
+      - name: Build + EIP-170 size gate
+        run: forge build --sizes
+
+      - name: Unit + fuzz tests
+        run: forge test --no-match-path 'test/invariant/*'
+
+      - name: Invariant suite
+        run: forge test --match-path 'test/invariant/*'
+
+      - name: Gas snapshot (informational)
+        run: forge snapshot --no-match-path 'test/invariant/*' >> "$GITHUB_STEP_SUMMARY" || true
+
+  fork-test:
+    runs-on: ubuntu-latest
+    continue-on-error: true # public RPC is rate-limited; do not block merges on it
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: v1.8.1
+      - name: Fork tests vs Robinhood Chain mainnet
+        run: forge test --match-contract RobinhoodFork --fork-url https://rpc.mainnet.chain.robinhood.com
+
+  static-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: v1.8.1
+      - name: Slither
+        uses: crytic/slither-action@v0.4.2
+        with:
+          fail-on: high
+          slither-args: '--filter-paths "lib/|test/|script/"'

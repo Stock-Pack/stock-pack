@@ -1,0 +1,9 @@
+{
+  "art": "0xaD59De8917AC6059f68198738B882F3A746b10A3",
+  "artist": "0xfDD9a583A5916AF92C239D1B0158FC0118350DB6",
+  "baseUrl": "https://stock-pack.vercel.app",
+  "chainId": 46630,
+  "deployBlock": 111348241,
+  "renderer": "0x4fEB6455A0cAD6bfE8A5a276A7e9247137B204Bc",
+  "stockPack": "0x52BaEB6b67Ca9ba9D168c7E63a6fFe81Da6ef387"
+}
