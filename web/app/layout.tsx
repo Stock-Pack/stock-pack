@@ -82,7 +82,7 @@ const FOOTER_LINKS: { heading: string; links: { label: string; href: string; ext
   {
     heading: "Community",
     links: [
-      { label: "GitHub", href: "https://github.com/", external: true },
+      { label: "GitHub", href: "https://github.com/Stock-Pack/stock-pack", external: true },
       { label: "Blockscout", href: "https://robinhoodchain.blockscout.com/", external: true },
     ],
   },
