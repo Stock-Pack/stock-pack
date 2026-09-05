@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/assets/avatar.png" width="76" alt="StockPack logo: a square card holding three descending rows, the last in amber">
+<img src="docs/assets/avatar.png" width="76" alt="StockPack mark: four cream blades turning around an amber diamond">
 
 # StockPack
 
@@ -28,6 +28,8 @@
 ---
 
 ## The layer
+
+<img src="docs/assets/banner-portfolio.jpg" width="100%" alt="The portfolio is the product. Tokenized stocks were step one.">
 
 Stock tokens are the **asset layer** — real-world equity, brought on-chain as ERC-20s.
 StockPack is the **layer on top**: one ERC-721 that carries a whole portfolio, trades anywhere, and unwraps to the exact underlying at any moment.
@@ -199,6 +201,7 @@ The art sits behind the swappable renderer, so shipping it is a renderer upgrade
 | [How the art works](web/content/nft-art.md) | What decides your card, and what it guarantees |
 | [Architecture](docs/ARCHITECTURE.md) | Contract layout and design decisions |
 | [Product](docs/PRODUCT.md) | Why this exists |
+| [Brand](docs/brand/README.md) | The mark, lockup and banners — served at [/brand](https://stock-pack.vercel.app/brand) |
 
 ---
 

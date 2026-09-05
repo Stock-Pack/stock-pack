@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
+import { Logo } from "@/components/Logo";
 import { network } from "@/lib/contracts";
 
 const NETWORK_LABEL =
@@ -17,29 +18,6 @@ const NAV = [
   { href: "/#how", label: "How it works" },
   { href: "/#guarantees", label: "Guarantees" },
 ];
-
-/** The wordmark: a solid black tile with a knocked-out card outline inside it. */
-export function Logo({ className = "" }: { className?: string }) {
-  return (
-    <span className={`flex items-center gap-2 ${className}`}>
-      <svg
-        aria-hidden
-        viewBox="0 0 24 24"
-        className="h-[22px] w-[22px] shrink-0"
-        fill="none"
-      >
-        {/* The product, reduced: a square card holding a list of positions. Square
-            because the card itself is 1:1; three descending rows because a basket is
-            what it holds; the accent row because one of them is always the last. */}
-        <rect x="2.5" y="2.5" width="19" height="19" stroke="currentColor" strokeWidth="1.8" />
-        <rect x="6" y="6.5" width="12" height="2.2" fill="currentColor" />
-        <rect x="6" y="10.9" width="8.5" height="2.2" fill="currentColor" />
-        <rect x="6" y="15.3" width="5" height="2.2" fill="var(--color-accent)" />
-      </svg>
-      <span className="display text-base">stockpack</span>
-    </span>
-  );
-}
 
 /**
  * RainbowKit's own button is a rounded pill with its own type stack. This drives the

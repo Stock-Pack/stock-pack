@@ -1,10 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-  <!-- A favicon must not rely on transparency: the tab strip can be white, light grey,
-       dark, or a browser theme colour, and a light mark on a clear ground disappears on
-       half of them. The plate is part of the icon so contrast never depends on the host. -->
-  <rect width="24" height="24" fill="#14140F"/>
-  <rect x="3.5" y="3.5" width="17" height="17" fill="none" stroke="#F2EFE9" stroke-width="1.7"/>
-  <rect x="6.8" y="7.3" width="10.4" height="2" fill="#F2EFE9"/>
-  <rect x="6.8" y="11" width="7.2" height="2" fill="#F2EFE9"/>
-  <rect x="6.8" y="14.7" width="4.2" height="2" fill="#E8B44F"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="#0A0A0A"/><g transform="translate(-3.75 -3.75) scale(0.069818)"><path fill="#F4F0E5" stroke="#0A0A0A" stroke-width="26" stroke-linejoin="miter" d="M952 362 L762 172 L646 172 L456 362 L652 362 L952 662 Z M662 952 L852 762 L852 646 L662 456 L662 652 L362 952 Z M72 662 L262 852 L378 852 L568 662 L372 662 L72 362 Z M362 72 L172 262 L172 378 L362 568 L362 372 L662 72 Z"/><path fill="#F1A93B" stroke="#0A0A0A" stroke-width="14" d="M512 384 L640 512 L512 640 L384 512 Z"/></g></svg>

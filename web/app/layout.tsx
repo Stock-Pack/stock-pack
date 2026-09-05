@@ -5,6 +5,7 @@ import "./globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 
 import { Header } from "@/components/Header";
+import { Logo } from "@/components/Logo";
 import { TickerTape } from "@/components/TickerTape";
 import { Web3Provider } from "@/components/Web3Provider";
 
@@ -84,6 +85,7 @@ const FOOTER_LINKS: { heading: string; links: { label: string; href: string; ext
     links: [
       { label: "GitHub", href: "https://github.com/Stock-Pack/stock-pack", external: true },
       { label: "Blockscout", href: "https://robinhoodchain.blockscout.com/", external: true },
+      { label: "Brand assets", href: "/brand" },
     ],
   },
 ];
@@ -108,23 +110,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <footer className="border-t border-line">
             <div className="mx-auto grid max-w-[1280px] gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-[1.6fr_repeat(3,1fr)]">
               <div>
-                <div className="flex items-center gap-2">
-            <svg
-            aria-hidden
-            viewBox="0 0 24 24"
-            className="h-[22px] w-[22px] shrink-0"
-            fill="none"
-            >
-            {/* The product, reduced: a square card holding a list of positions. Square
-            because the card itself is 1:1; three descending rows because a basket is
-            what it holds; the accent row because one of them is always the last. */}
-            <rect x="2.5" y="2.5" width="19" height="19" stroke="currentColor" strokeWidth="1.8" />
-            <rect x="6" y="6.5" width="12" height="2.2" fill="currentColor" />
-            <rect x="6" y="10.9" width="8.5" height="2.2" fill="currentColor" />
-            <rect x="6" y="15.3" width="5" height="2.2" fill="var(--color-accent)" />
-            </svg>
-                  <span className="display text-base">stockpack</span>
-                </div>
+                <Logo />
                 <p className="mini mt-3 max-w-xs">
                   Tokenized stock baskets sealed into one redeemable card on Robinhood Chain. Pack, trade, unpack
                   anytime.
